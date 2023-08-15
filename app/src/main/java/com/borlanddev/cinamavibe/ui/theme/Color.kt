@@ -2,7 +2,7 @@ package com.borlanddev.cinamavibe.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
+val primaryBlue = Color(0xFF0072ff)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
 
