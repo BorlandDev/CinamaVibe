@@ -1,4 +1,4 @@
-package com.borlanddev.cinamavibe.splash
+package com.borlanddev.cinamavibe.ui.splash
 
 import android.content.Intent
 import android.os.Build
@@ -7,8 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
-import com.borlanddev.cinamavibe.MainActivity
 import com.borlanddev.cinamavibe.SPLASH_SCREEN_DURATION
+import com.borlanddev.cinamavibe.ui.MainActivity
 import kotlinx.coroutines.delay
 
 class SplashActivity : ComponentActivity() {

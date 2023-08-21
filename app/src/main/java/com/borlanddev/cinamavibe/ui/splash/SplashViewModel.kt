@@ -1,4 +1,4 @@
-package com.borlanddev.cinamavibe.splash
+package com.borlanddev.cinamavibe.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
