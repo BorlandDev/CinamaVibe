@@ -2,14 +2,15 @@ package com.borlanddev.cinamavibe.ui.login
 
 import com.borlanddev.cinamavibe.base.Reducer
 
-class LoginReducer : Reducer<LoginState, LoginEvent>() {
+class LoginReducer(private val initState: LoginState) : Reducer<LoginState, LoginEvent>(initState) {
+    override fun getInitState(): LoginState = initState
     override fun reduce(state: LoginState, event: LoginEvent): LoginState {
         return when (event) {
-            is LoginEvent.Email -> {
+            is LoginEvent.ChangeEmail -> {
                 state.copy(email = event.text)
             }
 
-            is LoginEvent.Password -> {
+            is LoginEvent.ChangePassword -> {
                 state.copy(password = event.text)
             }
 
@@ -30,9 +31,8 @@ class LoginReducer : Reducer<LoginState, LoginEvent>() {
                 }
             }
 
-            else -> {
-                state
-            }
+            is LoginEvent.Empty -> state
+            is LoginEvent.RegistrationWithSocialNetwork -> TODO()
         }
     }
 }

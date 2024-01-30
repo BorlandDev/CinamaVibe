@@ -1,15 +1,13 @@
 package com.borlanddev.cinamavibe.ui.login
 
 import com.borlanddev.cinamavibe.base.BaseViewModel
-import com.borlanddev.cinamavibe.ui.login.LoginEvent.Email
+import com.borlanddev.cinamavibe.ui.login.LoginEvent.ChangeEmail
 import com.borlanddev.cinamavibe.ui.login.LoginEvent.Login
-import com.borlanddev.cinamavibe.ui.login.LoginEvent.Password
+import com.borlanddev.cinamavibe.ui.login.LoginEvent.ChangePassword
 import com.borlanddev.cinamavibe.ui.login.LoginEvent.Registration
 import com.borlanddev.cinamavibe.ui.login.usecase.LoginUseCase
 import com.borlanddev.cinamavibe.ui.login.usecase.RegistrationUseCase
 import com.borlanddev.cinamavibe.ui.login.usecase.SocialNetworkUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class LoginViewModel(
     loginReducer: LoginReducer,
@@ -24,28 +22,20 @@ class LoginViewModel(
         socialNetworkUseCase
     )
 ) {
-
-    override val state = MutableStateFlow(LoginState())
-    val loginState = this.state.asStateFlow()
-
-    fun emailInput(text: String) {
-        sendEvent(Email(text))
+    fun changeEmail(text: String) {
+        sendEvent(ChangeEmail(text))
     }
 
-    fun passwordInput(text: String) {
-        sendEvent(Password(text))
-    }
-
-    fun registration() {
-        sendEvent(Registration(state.value.email, state.value.password))
+    fun changePassword(text: String) {
+        sendEvent(ChangePassword(text))
     }
 
     fun login() {
-        sendEvent(Login(state.value.email, state.value.password))
+        if (state.value.isRegistered) sendEvent(Login(state.value.email, state.value.password))
+        else sendEvent(Registration(state.value.email, state.value.password))
     }
 
-
-    private fun validationField(): Boolean = state.value.email.isNotEmpty()
+    private fun validatingField(): Boolean = state.value.email.isNotEmpty()
 
     /*  private fun validateInput(inputValue: String, inputType: InputType): Boolean =
           when (inputType) {

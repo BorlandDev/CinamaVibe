@@ -3,6 +3,8 @@ package com.borlanddev.cinamavibe.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<T : UiState, E : UiEvent>(
@@ -10,9 +12,10 @@ abstract class BaseViewModel<T : UiState, E : UiEvent>(
     private val usecases: List<BaseUseCase<E>>
 ) : ViewModel() {
 
-    abstract val state: MutableStateFlow<T>
+    private val _state: MutableStateFlow<T> = MutableStateFlow(reducer.getInitState())
+    val state: StateFlow<T> = _state.asStateFlow()
     protected fun sendEvent(event: E) {
-        state.value = reducer.reduce(state.value, event)
+        _state.value = reducer.reduce(_state.value, event)
 
         val correlatedUsecases = usecases.filter {
             it.canExecute(event)
@@ -20,7 +23,7 @@ abstract class BaseViewModel<T : UiState, E : UiEvent>(
 
         correlatedUsecases.forEach {
             viewModelScope.launch {
-                state.value = reducer.reduce(state.value, it.execute(state.value, event))
+                _state.value = reducer.reduce(_state.value, it.execute(_state.value, event))
             }
         }
     }
