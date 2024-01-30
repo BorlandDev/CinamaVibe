@@ -27,7 +27,7 @@ import com.borlanddev.cinemavibe.R
 import org.koin.androidx.compose.koinViewModel
 
 
-@Composable
+@Composable // переписати на Hilt
 fun LoginScreen(viewModel: LoginViewModel = koinViewModel()) {
     val loginState: State<LoginState> = viewModel.loginState.collectAsState()
 
@@ -45,7 +45,7 @@ fun LoginScreen(viewModel: LoginViewModel = koinViewModel()) {
             modifier = Modifier.padding(top = 50.dp)
         )
         Spacer(Modifier.height(150.dp))
-
+        
         LoginTextField(
             fieldText = loginState.value.email,
             labelText = stringResource(id = R.string.email_field_text),
